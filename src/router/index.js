@@ -17,6 +17,14 @@ const routes = [
     },
     component: () => import(/* webpackChunkName: "register" */ "../views/auth/Register"),
   },
+  {
+    path: "/login",
+    name: "Login",
+    meta: {
+      layout: "auth",
+    },
+    component: () => import(/* webpackChunkName: "register" */ "../views/auth/Login"),
+  },
 ];
 
 const router = createRouter({

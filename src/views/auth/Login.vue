@@ -1,19 +1,10 @@
 <template>
   <div class="mt-8">
     <div class="container mx-auto px-8">
-      <form class="flex flex-col space-y-6 justify-start" @submit.prevent="onSubmit">
-        <div class="row">
-          <label for="fullname" class="flex flex-col">
-            <span class="">Full Name</span>
-            <input
-              id="fullname"
-              type="text"
-              placeholder="iMoney..."
-              class="px-4 py-3 rounded-lg border border-gray-100 mt-1"
-            />
-          </label>
-        </div>
-
+      <form
+        class="flex flex-col space-y-6 justify-start"
+        @submit.prevent="onSubmit"
+      >
         <div class="row">
           <label for="email" class="flex flex-col">
             <span class="">Email</span>
@@ -39,23 +30,45 @@
         </div>
 
         <div class="row">
-          <button type="submit" class="py-3 text-center w-full bg-primary text-white">Sign up</button>
+          <button
+            type="submit"
+            class="py-3 text-center w-full bg-primary text-white"
+          >
+            Sign in
+          </button>
         </div>
       </form>
 
       <div class="w-full text-center mt-6">
-        <span>I'm already a member.</span>
+        <span>I'm a new member.</span>
         <span class="ml-1">
-          <router-link :to="{ name: 'Login', params: {}}" class="text-primary font-bold">&nbsp;Sign in</router-link>
+          <router-link
+            :to="{ name: 'Register', params: {} }"
+            class="text-primary font-bold"
+            >&nbsp;Sign up</router-link
+          >
         </span>
       </div>
     </div>
   </div>
 </template>
 <script>
-export default {
-  setup() {
-    function onSubmit() {}
-  },
-};
+  import { ref, reactive, watch } from 'vue';
+
+  export default {
+    setup() {
+      const userName = ref('');
+      const user = reactive({
+        name: 'longkma'
+      });
+
+      function onSubmit() {
+        userName.value = 'longkma';
+      }
+
+      return {
+        userName
+      }
+    },
+  };
 </script>
