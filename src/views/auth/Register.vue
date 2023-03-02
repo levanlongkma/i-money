@@ -10,6 +10,7 @@
               type="text"
               placeholder="iMoney..."
               class="px-4 py-3 rounded-lg border border-gray-100 mt-1"
+              v-model="infoUser.fullname"
             />
           </label>
         </div>
@@ -22,6 +23,7 @@
               type="text"
               placeholder="example@gmail.com"
               class="px-4 py-3 rounded-lg border border-gray-100 mt-1"
+              v-model="infoUser.email"
             />
           </label>
         </div>
@@ -34,6 +36,7 @@
               type="password"
               placeholder=""
               class="px-4 py-3 rounded-lg border border-gray-100 mt-1"
+              v-model="infoUser.password"
             />
           </label>
         </div>
@@ -42,6 +45,10 @@
           <button type="submit" class="py-3 text-center w-full bg-primary text-white">Sign up</button>
         </div>
       </form>
+
+      <div v-if="error" class="mt-4 text-red text-left">
+        <span>{{ error }}</span>
+      </div>
 
       <div class="w-full text-center mt-6">
         <span>I'm already a member.</span>
@@ -53,9 +60,25 @@
   </div>
 </template>
 <script>
-export default {
-  setup() {
-    function onSubmit() {}
-  },
-};
+  import { ref, reactive } from 'vue';
+  import { useSighUp } from '@/composables/useSignUp'
+  
+  export default {
+
+    setup() {
+      const infoUser = reactive({
+        fullname: '',
+        email: '',
+        password: ''
+      });
+
+      const { error, isPending, sigup } = useSighUp();
+
+      async function onSubmit() {
+        await sigup(infoUser);
+      }
+
+      return {infoUser, onSubmit, error, isPending}
+    },
+  };
 </script>

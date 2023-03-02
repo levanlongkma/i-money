@@ -13,6 +13,7 @@
               type="text"
               placeholder="example@gmail.com"
               class="px-4 py-3 rounded-lg border border-gray-100 mt-1"
+              v-model="userData.email"
             />
           </label>
         </div>
@@ -25,6 +26,7 @@
               type="password"
               placeholder=""
               class="px-4 py-3 rounded-lg border border-gray-100 mt-1"
+              v-model="userData.password"
             />
           </label>
         </div>
@@ -33,11 +35,16 @@
           <button
             type="submit"
             class="py-3 text-center w-full bg-primary text-white"
+            :disabled="isPending"
           >
             Sign in
           </button>
         </div>
       </form>
+
+      <div v-if="error" class="mt-4 text-red text-left">
+        <span>{{ error }}</span>
+      </div>
 
       <div class="w-full text-center mt-6">
         <span>I'm a new member.</span>
@@ -53,22 +60,25 @@
   </div>
 </template>
 <script>
-  import { ref, reactive, watch } from 'vue';
+  import { ref, reactive, watch, onMounted } from 'vue';
+  import { useSignIn } from '@/composables/useSignIn'
 
   export default {
     setup() {
-      const userName = ref('');
-      const user = reactive({
-        name: 'longkma'
+      const userData = reactive({
+        email: '',
+        password: ''
       });
 
+      const { error, isPending, login } = useSignIn();
+
       function onSubmit() {
-        userName.value = 'longkma';
+        login(userData);
       }
 
       return {
-        userName
+        error, isPending, onSubmit, userData
       }
-    },
+    }
   };
 </script>
